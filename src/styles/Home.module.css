@@ -1,0 +1,340 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: url('/background.jpg') center/cover no-repeat fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative; /* Needed for the pseudo-element to position correctly */
+}
+
+.main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(to right, black 0%, transparent 5%, transparent 95%, black 100%);
+    /* Applies the dimming effect only on the left and right sides */
+}
+
+.wrapper {
+	position: relative;
+	border: 1px solid var(--color-primary);
+	border-radius: var(--rounded-md);
+	background: hsl(var(--h), 1%, 10%);
+	max-width: clamp(20rem, 90%, 40rem);
+	box-shadow: var(--shadow-lg);
+}
+
+.wrapper::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    filter: blur(100px);  /* Remove or adjust the blur filter */
+    background: linear-gradient(95deg, #7baff3, #3f8ef6, #0b2c56, #4e70d0);
+    background-size: 200% 200%;
+    animation: animateGlow 5s linear infinite;
+}
+
+.content {
+	margin-top: 1.5rem;
+}
+
+.footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5rem;
+	background-color: hsla(var(--h), var(--s), 22%, 0.5);
+	border-top: 1px solid hsl(var(--h), var(--s), 20%);
+	border-radius: 0 0 var(--rounded-md) var(--rounded-md);
+	font-size: 0.875rem;
+	white-space: pre;
+	color: var(--color-grey-700);
+}
+
+.footer svg {
+	margin-right: 0.25rem;
+}
+
+.footer a {
+	color: inherit;
+	text-decoration: none;
+	text-underline-offset: 0.125rem;
+}
+
+.footer a:hover {
+	color: var(--color-grey-500);
+}
+
+.footer svg:has(+ a:hover) {
+	color: var(--color-grey-500) !important;
+}
+
+.container {
+	padding: 2rem 2.25rem;
+}
+
+.wrapper li {
+	color: var(--color-grey-400);
+	line-height: 1.75;
+}
+
+.wrapper li:not(:first-child) {
+	margin-top: 1rem;
+}
+
+.main h1 {
+	font-size: 1.75rem;
+	font-weight: 600;
+}
+
+span.button {
+	position: relative;
+	display: inline-flex;
+	vertical-align: bottom;
+	align-items: center;
+	justify-content: center;
+	gap: 0.375rem;
+	padding: 0.375rem 0.675rem;
+	margin: 0 0.25rem;
+	font-size: 0.875rem;
+	border-radius: var(--rounded-sm);
+	background-color: hsl(var(--h), var(--s), 20%);
+	border: 1px solid hsl(var(--h), var(--s), 22%);
+	color: inherit;
+	line-height: 1;
+	box-shadow: var(--shadow-md);
+	cursor: pointer;
+	user-select: none;
+	transition: all 0.1s;
+}
+
+.highlight {
+	position: relative;
+}
+
+.highlightSelected {
+	z-index: 5;
+}
+
+.highlightSelected::after {
+	opacity: 0.5 !important;
+}
+
+.highlight::after {
+	opacity: 0;
+}
+
+.highlight::after {
+	transition: opacity 0.2s;
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: -1;
+	height: 100%;
+	width: 100%;
+	filter: blur(15px);
+	background: linear-gradient(95deg, #7baff3, #3f8ef6, #0b2c56, #4e70d0);
+	background-size: 200% 200%;
+	animation: animateGlow 5s linear infinite;
+}
+
+span.button:hover {
+	background-color: hsl(var(--h), var(--s), 30%);
+	border: 1px solid hsl(var(--h), var(--s), 32%);
+	color: var(--color-grey-100);
+}
+
+.header {
+	display: flex;
+    justify-content: space-between; /* Change alignment to space between */
+	align-items: center;
+	padding: 1rem;
+	padding-bottom: 1.75rem;
+	background-color: #000; /* Black background */
+    color: #f5f5f5; /* Off-white text color */
+    border-bottom: 2px solid #ADD8E6; /* Light blue border */
+  }
+  
+  .header .buttons {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	
+  }
+
+  .buttonSection {
+	display: flex;
+	justify-content: center; /* Center the buttons horizontally */
+	height: 7vh;
+  }
+
+  .price{
+	display: flex;
+	justify-content: center; /* Center the buttons horizontally */
+	margin-top: 10px;
+	margin-left: -50px;
+	font-weight: 900;
+	font-size: 3vh;
+  }
+
+  .header h1 {
+    margin: 0;
+    padding: 0;
+    margin-left: 10vw;
+}
+
+.headerContent {
+	display: flex;
+	align-items: center;
+	transform: translate(20%,0%);
+  }
+  
+  .creatureIcon {
+	display: block;
+	margin: 0 auto;
+	position: fixed;
+	top: 15%;
+	left: 80%;
+	width: 30vh;
+	height: 20vh;
+  }
+
+
+.backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 4;
+	pointer-events: none;
+	background: hsla(0, 0%, 4%, 0.75);
+	transition: opacity 0.2s;
+}
+
+@keyframes animateGlow {
+	0% {
+		background-position: 0% 50%;
+	}
+	100% {
+		background-position: 200% 50%;
+	}
+}
+
+
+
+.menu {
+	background-color: #fde7bf; /* Light orange background for the interior */
+	border: 5px solid #FF8C00; /* Dark orange border */
+	border-radius: 20px; /* Rounded corners */
+	padding: 20px; /* Space for your content */
+	color: black; /* Text color */
+	width: 35vw; /* Adjusted width */
+	height: 64vh; /* Adjusted height */
+	box-sizing: border-box; /* Ensures the padding is included in the width/height */
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Keeps items aligned horizontally */
+	position: absolute;
+	top: 5%;
+  }
+  
+  .menuHeader {
+	align-self: flex-start; /* Aligns the header to the start of the flex container */
+	font-weight: 900; /* Bold font */
+	margin-bottom: 20px; /* Space between the header and the list */
+	font-size: 5vh; /* Adjusted font size */
+	color: black; /* Ensures the header is black */
+	width: 100%; /* Ensures the header spans the full width of the container */
+	text-align: center; /* Aligns text to the left */
+	
+  }
+  
+  .menuList {
+	list-style: none; /* Remove default list styling */
+	padding: 0; /* Remove default padding */
+	margin: 0; /* Adjust if needed */
+	font-weight: bold; /* Bold font */
+	text-align: center; /* Centers the list items */
+  }
+
+  .menuList2 {
+	list-style: none; /* Remove default list styling */
+	padding: 0; /* Remove default padding */
+	margin: 0; /* Adjust if needed */
+	font-weight: bold; /* Bold font */
+	margin-left: 10vh;
+	text-align: left; /* Centers the list items */
+  }
+  
+  .menuList li {
+	margin-bottom: 10px; /* Adjust space between list items */
+  }
+
+  .mintSection {
+	display: block;
+	align-items: center;
+	justify-content: center;
+	margin-top: -10px; /* Adjust as needed */
+	margin-bottom: 20px; /* Adjust as needed */
+	margin-left: 40px;
+  }
+  
+  .mintInput {
+	width: 25vh; /* Adjust as needed */
+	margin-top: 20px;
+	margin-bottom: 20px; /* Adjust as needed */
+	padding: 5px;
+	margin: 0 10px; /* Space between buttons and input */
+	border: 1px solid #000; /* Black border */
+	text-align: center;
+  }
+  
+  .mintButton, .mintAdjustButton {
+	background-color: #ccc; /* Gray background */
+	color: #000; /* Black text */
+	border: 1px solid #000; /* Black border */
+	padding: 5px 10px;
+	cursor: pointer;
+	width: 8vh;
+	margin-right: 0px;
+	margin-top: 20px;
+	justify-content: center;
+	text-align: center;
+  }
+  
+  .mintButton:hover, .mintAdjustButton:hover {
+	background-color: #bbb; /* Slightly darker on hover */
+  }
+  
+
+/* In your Home.module.css or equivalent */
+.secondMenu {
+	background-color: #fde7bf; /* Light orange background for the interior */
+	border: 5px solid #FF8C00; /* Dark orange border */
+	border-radius: 20px; /* Rounded corners */
+	padding: 20px; /* Space for your content */
+	color: black; /* Text color */
+	width: 62vw; /* Twice the width of the first menu */
+	min-height: 50vh; /* Keep the same height or adjust as needed */
+	box-sizing: border-box; /* Ensures the padding is included in the width/height */
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Keeps items aligned horizontally */
+	margin-top: 78vh; /* Full screen length scroll to reach the menu */
+	margin-bottom: 10vh;
+}
+  

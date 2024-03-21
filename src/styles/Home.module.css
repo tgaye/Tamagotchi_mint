@@ -432,7 +432,7 @@ span.button:hover {
 	display: flex;
 	flex-direction: column;
 	align-items: center; /* Keeps items aligned horizontally */
-	margin-top: 85vh; /* Full screen length scroll to reach the menu */
+	margin-top: 95vh; /* Full screen length scroll to reach the menu */
 	margin-bottom: 10vh;
 }
   

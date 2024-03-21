@@ -302,8 +302,8 @@ span.button:hover {
 	list-style: none; /* Remove default list styling */
 	padding: 0; /* Remove default padding */
 	margin: 0; /* Adjust if needed */
-	font-weight: 300; /* Bold font */
-	font-size: 2vh;
+	font-weight: 700; /* Bold font */
+	font-size: 2.5vh;
 	text-align: center; /* Centers the list items */
 	font-family: 'CustomFont'; /* Apply the custom font */
   }

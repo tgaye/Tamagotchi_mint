@@ -229,9 +229,9 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
           {showMenu && !claimRewardsClicked && (
             <>
               <ul className={styles.menuList}>
-                <li>$20 WL mint</li>
-                <li>$40 Public mint</li>
-                <li>network: BASE</li>
+                <li>$20 WL MINT</li>
+                <li>$40 PUBLIC MINT</li>
+                <li>NETWORK: BASE</li>
               </ul>
 
               <div className={styles.mintSection}>

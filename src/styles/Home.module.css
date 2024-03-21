@@ -242,7 +242,7 @@ span.button:hover {
 	border-radius: 20px; /* Rounded corners */
 	padding: 20px; /* Space for your content */
 	color: black; /* Text color */
-	width: 35vw; /* Adjusted width */
+	width: 80vh; /* Adjusted width */
 	height: 64vh; /* Adjusted height */
 	box-sizing: border-box; /* Ensures the padding is included in the width/height */
 	display: flex;
@@ -251,6 +251,8 @@ span.button:hover {
 	position: absolute;
 	top: 5%;
   }
+
+
   
   .menuHeader {
 	align-self: flex-start; /* Aligns the header to the start of the flex container */
@@ -328,7 +330,7 @@ span.button:hover {
 	border-radius: 20px; /* Rounded corners */
 	padding: 20px; /* Space for your content */
 	color: black; /* Text color */
-	width: 62vw; /* Twice the width of the first menu */
+	width: 100vh; /* Twice the width of the first menu */
 	min-height: 50vh; /* Keep the same height or adjust as needed */
 	box-sizing: border-box; /* Ensures the padding is included in the width/height */
 	display: flex;
@@ -338,3 +340,18 @@ span.button:hover {
 	margin-bottom: 10vh;
 }
   
+
+@media screen and (max-width: 800px) {
+	.menu {
+		width: 40vh;
+	}
+	.secondMenu {
+		width: 40vh;
+		min-height: 70vh; /* Keep the same height or adjust as needed */
+
+	}
+
+	.farmingRewards {
+		display: none;
+	}
+}

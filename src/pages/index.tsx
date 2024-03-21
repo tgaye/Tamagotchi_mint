@@ -29,7 +29,22 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 	const { isWhitelisted } = useWhitelist();
 	const [userBalance, setUserBalance] = useState(0);
 	const [showWhitelistButton, setShowWhitelistButton] = useState(true);
+	const [showEarnGotchi, setShowEarnGotchi] = useState(window.innerWidth > 1200);
+	const [showHeader, setShowHeader] = useState(window.innerWidth > 600);
+
+	useEffect(() => {
+		function handleResize() {
+		  setShowEarnGotchi(window.innerWidth > 1200);
+		  setShowHeader(window.innerWidth > 600);
+		}
 	
+		window.addEventListener('resize', handleResize);
+	
+		// Clean up the event listener on component unmount
+		return () => window.removeEventListener('resize', handleResize);
+	  }, []);
+	
+
   useEffect(() => {
     const fetchWhitelistStatus = async () => {
       // Simulating fetching whitelist status
@@ -191,8 +206,8 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
       </Head>
 	  <header className={styles.header}>
 		<div className={styles.headerContent} onClick={refreshPage}>
-			<h1>Earn $GOTCHI</h1>
-			<h1>ERC-tamagotchi</h1>
+		{showEarnGotchi && <h1>Earn $GOTCHI</h1>}
+		{showHeader && <h1>ERC-tamagotchi</h1>}
 		</div>
 		<div className={styles.buttons}>
 			<div onClick={closeAll} className={`${styles.highlight} ${isNetworkSwitchHighlighted ? styles.highlightSelected : ``}`}>
@@ -257,7 +272,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
                 <br />
                 <li>$GOTCHI will have liquidity added ~24 hours after mint.</li>
                 <br />
-                <li>Farming rewards for pets will be exponentially higher at the start of the experiment.</li>
+				<li className={styles.farmingRewards}>Farming rewards for pets will be exponentially higher at the start of the experiment.</li>
               </ul>
             </>
           )}
@@ -312,7 +327,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
           <li>ERC Tamagotchi is a blend of NFTs and tokens into one smart contract.</li>
           <li>Each tamagotchi exists on-chain. Your pet works for you to earn you ERC20 tokens.</li>
           <br />
-          <li style={{ fontSize: '5vh' }}>Rules:</li>
+          <li style={{ fontSize: '4vh' }}>Rules:</li>
 		  <ul className={styles.menuList2}>
 			<li>✅Your pets can claim tokens each &quot;waiting_period&quot;. (6 hours to start)</li>
 			<li>✅Your pets will evolve to new creatures after 5 claims.</li>

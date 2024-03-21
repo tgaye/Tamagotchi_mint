@@ -126,7 +126,11 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
   
 
   const handleMaxClick = () => {
-    setMintAmount(isWhitelisted ? 5 : 20);
+    setMintAmount(isWhitelisted ? 20 : 100);
+  };
+
+  const handleMax2Click = () => {
+    setMintAmount(isWhitelisted ? 100 : 100);
   };
 
   const toggleGameInfo = () => {
@@ -242,12 +246,12 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
                     max={isWhitelisted ? "20" : "100"} // Adjust max value based on whitelist status
                   />
                   <button onClick={incrementMintAmount} className={styles.mintAdjustButton}>+</button>
-				
-				  <button onClick={handleMaxClick} className={styles.mintButton}>Max</button>
-           
+
 				</div>
          
-
+				<button onClick={handleMaxClick} className={styles.mintButton2}>Max WL</button>
+				  <button onClick={handleMax2Click} className={styles.mintButton2}>Max Public</button>
+				  
 				<div className={styles.fixedButtonsContainer} style={{ textAlign: 'center', marginTop: '20px' }}>
 				{showWhitelistButton && isWhitelisted && (
 				<button
@@ -280,7 +284,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 				   <div className={styles.fixedButtonsContainer} style={{ textAlign: 'center', marginTop: '20px' }}>
             <button
               onClick={toggleGameInfo}
-              className={styles.fixedButton}
+              className={styles.fixedButton2}
               style={{ width: '200px', height: '50px', padding: '10px', fontSize: '16px', margin: '10px', border: '.5vh solid black' }}
             >
               Game Rules
@@ -288,7 +292,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
             {!claimRewardsClicked && (
               <button
                 onClick={handleClaimRewardsClick}
-                className={styles.fixedButton}
+                className={styles.fixedButton2}
                 style={{ width: '200px', height: '50px', padding: '10px', fontSize: '16px', margin: '10px', border: '.5vh solid black' }}
               >
                 Claim Rewards
@@ -311,7 +315,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 			<button
             //   onClick={toggleGameInfo}
               className={styles.fixedButton}
-              style={{ fontWeight: '900', backgroundColor: 'lightgreen', width: '200px', height: '50px', padding: '10px', fontSize: '16px', margin: '10px', border: '.5vh solid black' }}
+              style={{ marginLeft: '120px', fontWeight: '900', backgroundColor: 'lightgreen', width: '200px', height: '50px', padding: '10px', fontSize: '16px', margin: '10px', border: '.5vh solid black' }}
             >
                Claim
             </button>
@@ -329,10 +333,10 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
           <br />
           <li style={{ fontSize: '4vh' }}>Rules:</li>
 		  <ul className={styles.menuList2}>
-			<li>✅Your pets can claim tokens each &quot;waiting_period&quot;. (6 hours to start)</li>
+			<li>✅Your pets can claim tokens each &quot;waiting_period&quot;.</li>
 			<li>✅Your pets will evolve to new creatures after 5 claims.</li>
 			<li>✅Evolved pets yield 3x tokens for the same &quot;waiting_period&quot;</li>
-			<li>✅Each time 10% of pets evolve the &quot;waiting_period&quot; is increased by 3 hours. (max 24 hours)</li>
+			<li>✅Each time 10% of pets evolve the &quot;waiting_period&quot; is increased by 6 hours.</li>
 			</ul>
         </ul>
       </div>

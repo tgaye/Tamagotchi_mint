@@ -185,7 +185,7 @@ span.button:hover {
 	display: flex;
 	justify-content: center; /* Center the buttons horizontally */
 	margin-top: 10px;
-	margin-left: -50px;
+	margin-left: -90px;
 	font-weight: 900;
 	font-size: 3vh;
   }
@@ -243,7 +243,7 @@ span.button:hover {
 	padding: 20px; /* Space for your content */
 	color: black; /* Text color */
 	width: 80vh; /* Adjusted width */
-	height: 64vh; /* Adjusted height */
+	height: 69vh; /* Adjusted height */
 	box-sizing: border-box; /* Ensures the padding is included in the width/height */
 	display: flex;
 	flex-direction: column;
@@ -258,7 +258,7 @@ span.button:hover {
 	align-self: flex-start; /* Aligns the header to the start of the flex container */
 	font-weight: 900; /* Bold font */
 	margin-bottom: 20px; /* Space between the header and the list */
-	font-size: 5vh; /* Adjusted font size */
+	font-size: 3.5vh; /* Adjusted font size */
 	color: black; /* Ensures the header is black */
 	width: 100%; /* Ensures the header spans the full width of the container */
 	text-align: center; /* Aligns text to the left */
@@ -279,6 +279,7 @@ span.button:hover {
 	margin: 0; /* Adjust if needed */
 	font-weight: bold; /* Bold font */
 	margin-left: 10vh;
+	font-size: 1.8vh;
 	text-align: left; /* Centers the list items */
   }
   
@@ -292,8 +293,17 @@ span.button:hover {
 	justify-content: center;
 	margin-top: -10px; /* Adjust as needed */
 	margin-bottom: 20px; /* Adjust as needed */
-	margin-left: 40px;
+	margin-left: 100px;
   }
+
+  .fixedButton{
+	transform: translate(-30%, 0%);
+  }
+
+  .fixedButton2{
+	transform: translate(-5%, 0%);
+  }
+  
   
   .mintInput {
 	width: 25vh; /* Adjust as needed */
@@ -317,6 +327,23 @@ span.button:hover {
 	justify-content: center;
 	text-align: center;
   }
+
+  .mintButton2 {
+	background-color: #ccc; /* Gray background */
+	color: #000; /* Black text */
+	border: 2px solid #000; /* Black border */
+	padding: 5px 10px;
+	cursor: pointer;
+	width: 12vh;
+	height: 7vh;
+	margin-right: 0px;
+	margin-top: 20px;
+	justify-content: center;
+	text-align: center;
+	margin-left: 45px;
+	background-color: rgb(95, 183, 255);
+	border-radius: 1vh;
+  }
   
   .mintButton:hover, .mintAdjustButton:hover {
 	background-color: #bbb; /* Slightly darker on hover */
@@ -336,7 +363,7 @@ span.button:hover {
 	display: flex;
 	flex-direction: column;
 	align-items: center; /* Keeps items aligned horizontally */
-	margin-top: 78vh; /* Full screen length scroll to reach the menu */
+	margin-top: 85vh; /* Full screen length scroll to reach the menu */
 	margin-bottom: 10vh;
 }
   

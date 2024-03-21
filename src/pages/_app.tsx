@@ -125,7 +125,7 @@ function ConnectWallet() {
   // Function to check whitelist and log Merkle proof
   async function checkWhitelist(address: string) {
     try {
-        const response = await fetch("/whiteList.json");
+        const response = await fetch("https://raw.githubusercontent.com/tgaye/chao_game/main/assets/data/whiteList.json");
         if (!response.ok) {
             throw new Error("Failed to fetch whitelist");
         }

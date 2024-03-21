@@ -1,14 +1,22 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { useState, useEffect } from "react";
-import { useWhitelist } from './WhitelistContext'; // Adjust the import path as necessary
+import { useWhitelist } from '../contexts/WhitelistContext'; // Adjust the import path as necessary
 import { useAccount, useSendTransaction } from 'wagmi';
 import React from 'react';
 import { ethers } from 'ethers';
 import { AppProps } from "next/app";
 import { useRouter } from 'next/router';
+import Web3 from "web3";
+import { Contract } from "web3-eth-contract";
 
-export default function Home({ web3, contract, proofs }: AppProps & { proofs: string[] }) {
+interface HomeProps extends AppProps {
+	web3: Web3;
+	contract: Contract<any>; 
+	proofs: string[];
+  }
+
+export default function Home({ web3, contract, proofs }: HomeProps) {
 	const [isNetworkSwitchHighlighted, setIsNetworkSwitchHighlighted] = useState(false);
 	const [isConnectHighlighted, setIsConnectHighlighted] = useState(false);
 	const [mintAmount, setMintAmount] = useState(1);
@@ -50,18 +58,18 @@ export default function Home({ web3, contract, proofs }: AppProps & { proofs: st
 		router.reload();
 	};
 
-  const fetchBalance = async (address) => {
+	const fetchBalance = async (address: string) => {
 	try {
 	  const balance = await contract.methods.balanceOf(address).call();
-	  setUserBalance(balance); // Update the userBalance state
+	  setUserBalance(Number(balance)); // Convert BigNumber to Number
 	  console.log("Balance of:", balance);
 	  // If user is whitelisted and balance is 5 or greater, adjust the conditions
-	  if (isWhitelisted && balance >= 1) {
-		console.log("Balance greater than cap");
-		setShowWhitelistButton(false); // Hide whitelist button
-		setMintPrice(0.012);
-		setMintAmount(Math.min(mintAmount, 20)); // Ensure mintAmount does not exceed new max
-	  }
+	//   if (balance === 20) {
+	// 	console.log("Balance greater than cap");
+	// 	setShowWhitelistButton(false); // Hide whitelist button
+	// 	setMintPrice(0.012);
+	// 	setMintAmount(Math.min(mintAmount, 20)); // Ensure mintAmount does not exceed new max
+	//   }
 	} catch (error) {
 	  console.error('Error fetching balance:', error);
 	}
@@ -89,16 +97,18 @@ export default function Home({ web3, contract, proofs }: AppProps & { proofs: st
     setMintAmount((prevAmount) => (prevAmount > 1 ? prevAmount - 1 : prevAmount));
   };
 
-  const handleMintAmountChange = (e) => {
-    const maxMint = isWhitelisted ? 20 : 100;
-    let value = Math.max(1, Math.min(maxMint, Number(e.target.value)));
-    setMintAmount(value);
+  const handleMintAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const maxMint = isWhitelisted ? 20 : 100;
+	let value = Math.max(1, Math.min(maxMint, Number(e.target.value)));
+	setMintAmount(value);
   };
+  
 
-  const calculatePrice = (amount, whitelisted) => {
-    const basePrice = whitelisted ? 0.006 : 0.012; // Adjusted price for whitelisted users
-    setMintPrice((amount * basePrice).toFixed(3));
-  };
+  const calculatePrice = (amount: number, whitelisted: boolean) => {
+	const basePrice = whitelisted ? 0.006 : 0.012; // Adjusted price for whitelisted users
+	setMintPrice(+(amount * basePrice).toFixed(3));  
+};
+  
 
   const handleMaxClick = () => {
     setMintAmount(isWhitelisted ? 5 : 20);
@@ -127,24 +137,23 @@ export default function Home({ web3, contract, proofs }: AppProps & { proofs: st
 
     try {
       // Convert the amount to Wei
-      const value = web3.utils.toWei((0.012 * mintAmount).toString(), 'ether');
+	  const value = BigInt(web3.utils.toWei((0.012 * mintAmount).toString(), 'ether'));
 
       // Prepare transaction parameters
       const transactionParameters = {
         from: address,
-        to: contract.options.address,
+        to: contract.options.address || '', // Set a default value for to
         value: value,
-        data: contract.methods.mintNFT(mintAmount).encodeABI(),
+        data: contract.methods.mintNFT(mintAmount).encodeABI()
       };
 
       // Sending the transaction
       const tx = await sendTransaction({ ...transactionParameters });
 
-      console.log('Transaction hash:', tx.hash);
     } catch (error) {
       console.error('Mint transaction error:', error);
     }
-  };
+};
 
   const handleWhitelistMintClick = async () => {
     if (!address) {
@@ -166,8 +175,6 @@ export default function Home({ web3, contract, proofs }: AppProps & { proofs: st
 
         // Sending the transaction
         const tx = await sendTransaction({ ...transactionParameters });
-
-        console.log('Transaction hash:', tx.hash);
     } catch (error) {
         console.error('Whitelist mint transaction error:', error);
     }
@@ -283,7 +290,7 @@ export default function Home({ web3, contract, proofs }: AppProps & { proofs: st
 
 			<span style={{ display: 'block', fontWeight: 'bold', color: 'black', marginTop: '10px' }}>
 				{/* Calculate and display user balance x 100 for BigInt */}
-				{`Balance x 100: ${(userBalance * BigInt(100)).toString()} $gotchi / 6 hours`}
+				{/* {`Balance x 100: ${(userBalance * BigInt(100)).toString()} $gotchi / 6 hours`} */}
 			</span>
 
 			<button
@@ -306,12 +313,12 @@ export default function Home({ web3, contract, proofs }: AppProps & { proofs: st
           <li>Each tamagotchi exists on-chain. Your pet works for you to earn you ERC20 tokens.</li>
           <br />
           <li style={{ fontSize: '5vh' }}>Rules:</li>
-          <ul className={styles.menuList2}>
-            <li>✅Your pets can claim tokens each "waiting_period". (6 hours to start)</li>
-            <li>✅Your pets will evolve to new creatures after 5 claims.</li>
-            <li>✅Evolved pets yield 3x tokens for the same "waiting_period"</li>
-            <li>✅Each time 10% of pets evolve the "waiting_period" is increased by 3 hours. (max 24 hours)</li>
-          </ul>
+		  <ul className={styles.menuList2}>
+			<li>✅Your pets can claim tokens each &quot;waiting_period&quot;. (6 hours to start)</li>
+			<li>✅Your pets will evolve to new creatures after 5 claims.</li>
+			<li>✅Evolved pets yield 3x tokens for the same &quot;waiting_period&quot;</li>
+			<li>✅Each time 10% of pets evolve the &quot;waiting_period&quot; is increased by 3 hours. (max 24 hours)</li>
+			</ul>
         </ul>
       </div>
     )}

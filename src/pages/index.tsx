@@ -211,7 +211,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 	  <header className={styles.header}>
 		<div className={styles.headerContent} onClick={refreshPage}>
 		{showEarnGotchi && <h1>Earn $GOTCHI</h1>}
-		{showHeader && <h1>ERC-tamagotchi</h1>}
+		{showHeader && <h1>ERCtamagotchi</h1>}
 		</div>
 		<div className={styles.buttons}>
 			<div onClick={closeAll} className={`${styles.highlight} ${isNetworkSwitchHighlighted ? styles.highlightSelected : ``}`}>

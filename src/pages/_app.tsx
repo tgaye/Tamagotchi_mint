@@ -125,7 +125,7 @@ function ConnectWallet() {
   // Function to check whitelist and log Merkle proof
   async function checkWhitelist(address: string) {
     try {
-        const response = await fetch("/whitelist.json");
+        const response = await fetch("/whiteList.json");
         if (!response.ok) {
             throw new Error("Failed to fetch whitelist");
         }

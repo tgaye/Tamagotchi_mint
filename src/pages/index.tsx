@@ -31,8 +31,22 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 	const [showWhitelistButton, setShowWhitelistButton] = useState(true);
 	const [showEarnGotchi, setShowEarnGotchi] = useState(window.innerWidth > 1200);
 	const [showHeader, setShowHeader] = useState(window.innerWidth > 600);
-
+  const [totalSupply, setTotalSupply] = useState(0); 
   
+
+  useEffect(() => {
+    const fetchTotalSupply = async () => {
+      try {
+        const supply = await contract.methods.totalSupply().call(); // Assuming `totalSupply` is the correct method name
+        setTotalSupply(Number(supply)); // Update state with fetched total supply
+      } catch (error) {
+        console.error("Failed to fetch total supply:", error);
+      }
+    };
+
+    fetchTotalSupply();
+  }, [contract.methods]); // Depend on contract.methods to re-fetch if the contract instance changes
+
 
 	useEffect(() => {
 		function handleResize() {
@@ -74,7 +88,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
     const [timeRemaining, setTimeRemaining] = useState(0);
   
     useEffect(() => {
-      const endTime = 1711065624 + 24 * 60 * 60; // 24 hours in the future
+      const endTime = 1711065624 + 23 * 60 * 60; // 24 hours in the future
       const interval = setInterval(() => {
         const currentTime = Math.floor(Date.now() / 1000);
         const remaining = endTime - currentTime;
@@ -186,57 +200,57 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
   const handleMintButtonClick = async () => {
     alert("Mint not open.");
     return;
-    // if (!address) {
-    //   console.error("Wallet not connected.");
-    //   return;
-    // }
+    if (!address) {
+      console.error("Wallet not connected.");
+      return;
+    }
 
-    // try {
-    //   // Convert the amount to Wei
-	  // const value = BigInt(web3.utils.toWei((0.012 * mintAmount).toString(), 'ether'));
+    try {
+      // Convert the amount to Wei
+	  const value = BigInt(web3.utils.toWei((0.012 * mintAmount).toString(), 'ether'));
 
-    //   // Prepare transaction parameters
-    //   const transactionParameters = {
-    //     from: address,
-    //     to: contract.options.address || '', // Set a default value for to
-    //     value: value,
-    //     data: contract.methods.mintNFT(mintAmount).encodeABI()
-    //   };
+      // Prepare transaction parameters
+      const transactionParameters = {
+        from: address,
+        to: contract.options.address || '', // Set a default value for to
+        value: value,
+        data: contract.methods.mintNFT(mintAmount).encodeABI()
+      };
 
-    //   // Sending the transaction
-    //   const tx = await sendTransaction({ ...transactionParameters });
+      // Sending the transaction
+      const tx = await sendTransaction({ ...transactionParameters });
 
-    // } catch (error) {
-    //   console.error('Mint transaction error:', error);
-    // }
+    } catch (error) {
+      console.error('Mint transaction error:', error);
+    }
 };
 
   const handleWhitelistMintClick = async () => {
     alert("Mint not open yet.");
     return;
 
-    // if (!address) {
-    //     console.error("Wallet not connected.");
-    //     return;
-    // }
+    if (!address) {
+        console.error("Wallet not connected.");
+        return;
+    }
 
-    // try {
-    //     // Convert the amount to Wei
-    //     const value = web3.utils.toWei((0.006 * mintAmount).toString(), 'ether');
+    try {
+        // Convert the amount to Wei
+        const value = web3.utils.toWei((0.006 * mintAmount).toString(), 'ether');
 
-    //     // Prepare transaction parameters
-    //     const transactionParameters = {
-    //         from: address,
-    //         to: contract.options.address,
-    //         value: value,
-    //         data: contract.methods.whitelistMint(mintAmount, window.whitelistProof).encodeABI(), // Pass window.whitelistProof as the merkleProof parameter
-    //     };
+        // Prepare transaction parameters
+        const transactionParameters = {
+            from: address,
+            to: contract.options.address,
+            value: value,
+            data: contract.methods.whitelistMint(mintAmount, window.whitelistProof).encodeABI(), // Pass window.whitelistProof as the merkleProof parameter
+        };
 
-    //     // Sending the transaction
-    //     const tx = await sendTransaction({ ...transactionParameters });
-    // } catch (error) {
-    //     console.error('Whitelist mint transaction error:', error);
-    // }
+        // Sending the transaction
+        const tx = await sendTransaction({ ...transactionParameters });
+    } catch (error) {
+        console.error('Whitelist mint transaction error:', error);
+    }
 };
 
 
@@ -340,6 +354,10 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
             )}
          </div>
          <CountdownTimer />
+
+          <div style={{ textAlign: 'center', margin: '20px' }}>
+            <span>Total NFTs Minted: {totalSupply}</span>
+          </div>
 		 {claimRewardsClicked && (
 			<div style={{ textAlign: 'center' }}>
 			<img src="/chao.png" alt="Chao Image" style={{ border: '1vh solid black', width: '30vh', height: '30vh' }} />

@@ -198,8 +198,8 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
   
   // Add a function to handle the mint button click event
   const handleMintButtonClick = async () => {
-    alert("Mint not open.");
-    return;
+    // alert("Mint not open.");
+    // return;
     if (!address) {
       console.error("Wallet not connected.");
       return;
@@ -226,8 +226,8 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 };
 
   const handleWhitelistMintClick = async () => {
-    alert("Mint not open yet.");
-    return;
+    // alert("Mint not open yet.");
+    // return;
 
     if (!address) {
         console.error("Wallet not connected.");
@@ -353,11 +353,11 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
               </button>
             )}
          </div>
-         <CountdownTimer />
+         <span>MINT LIVE!</span>
 
-          <div style={{ textAlign: 'center', margin: '20px' }}>
+          {/* <div style={{ textAlign: 'center', margin: '20px' }}>
             <span>Total NFTs Minted: {totalSupply}</span>
-          </div>
+          </div> */}
 		 {claimRewardsClicked && (
 			<div style={{ textAlign: 'center' }}>
 			<img src="/chao.png" alt="Chao Image" style={{ border: '1vh solid black', width: '30vh', height: '30vh' }} />

@@ -99,6 +99,7 @@ function ConnectWallet() {
   function WalletOptions() {
 	const { connectors, connect } = useConnect();
   const handleConnect = async (connector) => {
+
     const chainId = await web3.eth.getChainId(); // Assuming this returns a number
     const baseChainId: bigint = BigInt(8453); // Convert your base chain ID to bigint
         if (BigInt(chainId) !== baseChainId) { // Replace yourBaseNetworkChainId with Base's chain ID
@@ -136,6 +137,7 @@ function ConnectWallet() {
   useEffect(() => {
     if (address) {
       console.log(address);
+
       // Check against whitelist
       checkWhitelist(address);
     }

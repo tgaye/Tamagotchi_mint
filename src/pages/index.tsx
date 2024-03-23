@@ -33,7 +33,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 	const [showHeader, setShowHeader] = useState(window.innerWidth > 600);
   const [totalSupply, setTotalSupply] = useState(0); 
   
-
+ 
   useEffect(() => {
     const fetchTotalSupply = async () => {
       try {
@@ -375,7 +375,7 @@ const handleWhitelistMintClick = async () => {
          </div>
 
           <div style={{ textAlign: 'center', margin: '20px', fontSize: '4vh', color: 'white' }}>
-            <span>Total NFTs Minted: {897}</span>
+            <span>Total NFTs Minted: {987}</span>
           </div>
 		 {claimRewardsClicked && (
 			<div style={{ textAlign: 'center' }}>

@@ -375,7 +375,7 @@ const handleWhitelistMintClick = async () => {
          </div>
 
           <div style={{ textAlign: 'center', margin: '20px', fontSize: '4vh', color: 'white' }}>
-            <span>Total NFTs Minted: {987}</span>
+            <span>Total NFTs Minted: {1003}</span>
           </div>
 		 {claimRewardsClicked && (
 			<div style={{ textAlign: 'center' }}>

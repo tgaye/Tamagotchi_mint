@@ -248,15 +248,17 @@ const handleMintButtonClick = async () => {
     const tx = await sendTransaction({ ...transactionParameters });
   };
 
-  // Add user alert dialogue
-  const confirmed = confirm("Please confirm you are on BASE network before you continue.   It will say BASE in the top right.");
-  if (confirmed) {
-    // Check network and mint
-    mintFunction();
-  } else {
-    console.log("Minting canceled by user.");
-    // Handle cancellation if needed
-  }
+  mintFunction();
+
+  // // Add user alert dialogue
+  // const confirmed = confirm("Please confirm you are on BASE network before you continue.   It will say BASE in the top right.");
+  // if (confirmed) {
+  //   // Check network and mint
+  //   mintFunction();
+  // } else {
+  //   console.log("Minting canceled by user.");
+  //   // Handle cancellation if needed
+  // }
 };
 
 
@@ -277,16 +279,17 @@ const handleWhitelistMintClick = async () => {
     // Sending the transaction
     const tx = await sendTransaction({ ...transactionParameters });
   };
+  mintFunction();
 
-  // Add user alert dialogue
-  const confirmed = confirm("Please confirm you are on BASE network before you continue.  It will say BASE in the top right.");
-  if (confirmed) {
-    // Check network and mint
-    mintFunction();
-  } else {
-    console.log("Minting canceled by user.");
-    // Handle cancellation if needed
-  }
+  // // Add user alert dialogue
+  // const confirmed = confirm("Please confirm you are on BASE network before you continue.  It will say BASE in the top right.");
+  // if (confirmed) {
+  //   // Check network and mint
+  //   mintFunction();
+  // } else {
+  //   console.log("Minting canceled by user.");
+  //   // Handle cancellation if needed
+  // }
 };
 
   return (

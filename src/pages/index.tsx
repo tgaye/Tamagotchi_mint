@@ -164,7 +164,7 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
   };
 
   const handleMintAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	const maxMint = isWhitelisted ? 20 : 100;
+	const maxMint = isWhitelisted ? 20 : 20;
 	let value = Math.max(1, Math.min(maxMint, Number(e.target.value)));
 	setMintAmount(value);
   };
@@ -177,11 +177,11 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
   
 
   const handleMaxClick = () => {
-    setMintAmount(isWhitelisted ? 20 : 100);
+    setMintAmount(isWhitelisted ? 20 : 20);
   };
 
   const handleMax2Click = () => {
-    setMintAmount(isWhitelisted ? 100 : 100);
+    setMintAmount(isWhitelisted ? 20 : 20);
   };
 
   const toggleGameInfo = () => {
@@ -317,7 +317,7 @@ const handleWhitelistMintClick = async () => {
                     value={mintAmount}
                     onChange={handleMintAmountChange}
                     min="1"
-                    max={isWhitelisted ? "20" : "100"} // Adjust max value based on whitelist status
+                    max={isWhitelisted ? "20" : "20"} // Adjust max value based on whitelist status
                   />
                   <button onClick={incrementMintAmount} className={styles.mintAdjustButton}>+</button>
 
@@ -375,7 +375,7 @@ const handleWhitelistMintClick = async () => {
          </div>
 
           <div style={{ textAlign: 'center', margin: '20px', fontSize: '4vh', color: 'white' }}>
-            <span>Total NFTs Minted: {824}</span>
+            <span>Total NFTs Minted: {831}</span>
           </div>
 		 {claimRewardsClicked && (
 			<div style={{ textAlign: 'center' }}>

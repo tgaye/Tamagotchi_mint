@@ -122,6 +122,8 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
 		router.reload();
 	};
 
+  
+
 	const fetchBalance = async (address: string) => {
 	try {
 	  const balance = await contract.methods.balanceOf(address).call();
@@ -196,63 +198,81 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
   };
 
   
-  // Add a function to handle the mint button click event
-  const handleMintButtonClick = async () => {
-    // alert("Mint not open.");
-    // return;
-    if (!address) {
-      console.error("Wallet not connected.");
-      return;
-    }
 
+// Add logic to check the network before minting
+const checkNetworkAndMint = async (mintFunction) => {
+  if (window.ethereum) {
     try {
-      // Convert the amount to Wei
-	  const value = BigInt(web3.utils.toWei((0.012 * mintAmount).toString(), 'ether'));
+      // Use eth_chainId to get the current chain ID
+      const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+      const chainId = parseInt(chainIdHex, 16);
+      const baseChainId = 8453; // Your base chain ID as a number
+      
+      console.log("TEST22:" + chainId);
+      if (chainId !== baseChainId) {
+        alert(`Please switch to the correct network with chain ID ${baseChainId}.`);
+      } else {
+        if (!address) {
+          console.error("Wallet not connected.");
+          return;
+        }
 
-      // Prepare transaction parameters
-      const transactionParameters = {
-        from: address,
-        to: contract.options.address || '', // Set a default value for to
-        value: value,
-        data: contract.methods.mintNFT(mintAmount).encodeABI()
-      };
-
-      // Sending the transaction
-      const tx = await sendTransaction({ ...transactionParameters });
-
+        // Execute the passed mint function (either normal mint or whitelist mint)
+        await mintFunction();
+      }
     } catch (error) {
-      console.error('Mint transaction error:', error);
+      console.error('Failed to get chain ID:', error);
     }
+  } else {
+    // Handle case where Ethereum wallet is not detected
+    alert("Please make sure your Ethereum wallet is connected.");
+  }
 };
 
-  const handleWhitelistMintClick = async () => {
-    // alert("Mint not open yet.");
-    // return;
 
-    if (!address) {
-        console.error("Wallet not connected.");
-        return;
-    }
+// Modified handleMintButtonClick function
+const handleMintButtonClick = async () => {
+  const mintFunction = async () => {
+    // Convert the amount to Wei
+    const value = web3.utils.toWei((0.012 * mintAmount).toString(), 'ether');
 
-    try {
-        // Convert the amount to Wei
-        const value = web3.utils.toWei((0.006 * mintAmount).toString(), 'ether');
+    // Prepare transaction parameters
+    const transactionParameters = {
+      from: address,
+      to: contract.options.address || '', // Set a default value for to
+      value: value.toString(), // Convert BigInt to string for web3
+      data: contract.methods.mintNFT(mintAmount).encodeABI(),
+    };
 
-        // Prepare transaction parameters
-        const transactionParameters = {
-            from: address,
-            to: contract.options.address,
-            value: value,
-            data: contract.methods.whitelistMint(mintAmount, window.whitelistProof).encodeABI(), // Pass window.whitelistProof as the merkleProof parameter
-        };
+    // Sending the transaction
+    const tx = await sendTransaction({ ...transactionParameters });
+  };
 
-        // Sending the transaction
-        const tx = await sendTransaction({ ...transactionParameters });
-    } catch (error) {
-        console.error('Whitelist mint transaction error:', error);
-    }
+  // Check network and mint
+  checkNetworkAndMint(mintFunction);
 };
 
+// Modified handleWhitelistMintClick function
+const handleWhitelistMintClick = async () => {
+  const mintFunction = async () => {
+    // Convert the amount to Wei
+    const value = web3.utils.toWei((0.006 * mintAmount).toString(), 'ether');
+
+    // Prepare transaction parameters
+    const transactionParameters = {
+      from: address,
+      to: contract.options.address,
+      value: value.toString(), // Convert BigInt to string for web3
+      data: contract.methods.whitelistMint(mintAmount, window.whitelistProof).encodeABI(), // Pass window.whitelistProof as the merkleProof parameter
+    };
+
+    // Sending the transaction
+    const tx = await sendTransaction({ ...transactionParameters });
+  };
+
+  // Check network and mint
+  checkNetworkAndMint(mintFunction);
+};
 
   return (
     <>

@@ -19,6 +19,15 @@ const abi: any[] = [{"inputs":[],"stateMutability":"nonpayable","type":"construc
 
 // Contract address
 const contractAddress = '0xBa8184E38f5b3210694DB7a31d7302134db5Cd6F';
+interface EthereumProvider {
+  request: ({ method, params }: { method: string; params?: any[] }) => Promise<any>;
+}
+
+interface Window {
+  ethereum?: EthereumProvider;
+}
+
+
 
 // Initialize Web3 instance
 // const infuraApiKey = '3bc53c38485841ce9cfa1f539ebc4cfc';
@@ -85,19 +94,30 @@ function ConnectWallet() {
 	if (isConnected) return <Account />;
 	return <WalletOptions />;
   }
-  
+
   // Component for rendering wallet options
   function WalletOptions() {
 	const { connectors, connect } = useConnect();
-  
+  const handleConnect = async (connector) => {
+    const chainId = await web3.eth.getChainId(); // Assuming this returns a number
+    const baseChainId: bigint = BigInt(8453); // Convert your base chain ID to bigint
+        if (BigInt(chainId) !== baseChainId) { // Replace yourBaseNetworkChainId with Base's chain ID
+    // Alert the user to switch to the correct network manually
+    alert(`Please switch to the correct network with chain ID ${baseChainId}.`);
+    } else {
+      // If the chain ID matches, proceed with the connection
+      connect({ connector });
+    }
+    
+  };
 	return (
-	  <>
-		{connectors.map((connector) => ( // Removed the Connector type to avoid overriding the type inferred by TypeScript
-				<button key={connector.name} onClick={() => connect({ connector })}>
-				{connector.name}
-				</button>
-			))}
-	  </>
+    <>
+      {connectors.map((connector) => (
+        <button key={connector.name} onClick={() => handleConnect(connector)}>
+          {connector.name}
+        </button>
+      ))}
+    </>
 	);
   }
   

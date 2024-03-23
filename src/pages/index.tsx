@@ -200,34 +200,34 @@ export default function Home({ web3, contract, proofs }: HomeProps) {
   
 
 // Add logic to check the network before minting
-const checkNetworkAndMint = async (mintFunction) => {
-  if (window.ethereum) {
-    try {
-      // Use eth_chainId to get the current chain ID
-      const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
-      const chainId = parseInt(chainIdHex, 16);
-      const baseChainId = 8453; // Your base chain ID as a number
+// const checkNetworkAndMint = async (mintFunction) => {
+//   if (window.ethereum) {
+//     try {
+//       // Use eth_chainId to get the current chain ID
+//       const chainIdHex = await window.ethereum.request({ method: 'eth_chainId' });
+//       const chainId = parseInt(chainIdHex, 16);
+//       const baseChainId = 8453; // Your base chain ID as a number
       
-      console.log("TEST22:" + chainId);
-      if (chainId !== baseChainId) {
-        alert(`Please switch to the correct network with chain ID ${baseChainId}.`);
-      } else {
-        if (!address) {
-          console.error("Wallet not connected.");
-          return;
-        }
+//       console.log("TEST22:" + chainId);
+//       if (chainId !== baseChainId) {
+//         alert(`Please switch to the correct network with chain ID ${baseChainId}.`);
+//       } else {
+//         if (!address) {
+//           console.error("Wallet not connected.");
+//           return;
+//         }
 
-        // Execute the passed mint function (either normal mint or whitelist mint)
-        await mintFunction();
-      }
-    } catch (error) {
-      console.error('Failed to get chain ID:', error);
-    }
-  } else {
-    // Handle case where Ethereum wallet is not detected
-    alert("Please make sure your Ethereum wallet is connected.");
-  }
-};
+//         // Execute the passed mint function (either normal mint or whitelist mint)
+//         await mintFunction();
+//       }
+//     } catch (error) {
+//       console.error('Failed to get chain ID:', error);
+//     }
+//   } else {
+//     // Handle case where Ethereum wallet is not detected
+//     alert("Please make sure your Ethereum wallet is connected.");
+//   }
+// };
 
 
 // Modified handleMintButtonClick function
@@ -249,7 +249,7 @@ const handleMintButtonClick = async () => {
   };
 
   // Check network and mint
-  checkNetworkAndMint(mintFunction);
+  mintFunction();
 };
 
 // Modified handleWhitelistMintClick function
@@ -271,7 +271,7 @@ const handleWhitelistMintClick = async () => {
   };
 
   // Check network and mint
-  checkNetworkAndMint(mintFunction);
+  mintFunction();
 };
 
   return (

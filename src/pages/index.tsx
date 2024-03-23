@@ -373,11 +373,10 @@ const handleWhitelistMintClick = async () => {
               </button>
             )}
          </div>
-         <span>MINT LIVE!</span>
 
-          {/* <div style={{ textAlign: 'center', margin: '20px' }}>
-            <span>Total NFTs Minted: {totalSupply}</span>
-          </div> */}
+          <div style={{ textAlign: 'center', margin: '20px', fontSize: '4vh', color: 'white' }}>
+            <span>Total NFTs Minted: {780}</span>
+          </div>
 		 {claimRewardsClicked && (
 			<div style={{ textAlign: 'center' }}>
 			<img src="/chao.png" alt="Chao Image" style={{ border: '1vh solid black', width: '30vh', height: '30vh' }} />

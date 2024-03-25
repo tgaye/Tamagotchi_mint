@@ -29,9 +29,8 @@ interface Window {
 
 
 
-// Initialize Web3 instance
-// const infuraApiKey = '3bc53c38485841ce9cfa1f539ebc4cfc';
-const infuraUrl = `https://base-mainnet.g.alchemy.com/v2/-z5ttLf_PHEiKbLVH9G2dwMneHfYPQoD`;
+
+const infuraUrl = `https://base-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
 
 // Initialize Web3 instance with Infura provider
 const web3 = new Web3(infuraUrl);

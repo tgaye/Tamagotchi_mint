@@ -86,7 +86,7 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 }
 
-// Component for connecting wallet
+
 // Component for connecting wallet
 function ConnectWallet() {
 	const { isConnected } = useAccount();

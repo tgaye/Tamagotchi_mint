@@ -16,7 +16,7 @@ interface HomeProps extends AppProps {
 	proofs: string[];
   }
 
-export default function Home({ web3, contract, proofs }: HomeProps) {
+export default function Home({ web3, contract }: HomeProps) {
 	const [isNetworkSwitchHighlighted, setIsNetworkSwitchHighlighted] = useState(false);
 	const [isConnectHighlighted, setIsConnectHighlighted] = useState(false);
 	const [mintAmount, setMintAmount] = useState(1);
@@ -262,6 +262,23 @@ const handleMintButtonClick = async () => {
 };
 
 
+  const claimRewards = async () => {
+    try {
+      if (!address) {
+        console.error("No account connected");
+        return;
+      }
+
+      const gasEstimate = await contract.methods.claimAllRewards().estimateGas({ from: address });
+      const gasEstimateStr = String(gasEstimate);
+      const response = await contract.methods.claimAllRewards().send({ from: address, gas: gasEstimateStr });
+      console.log("Rewards claimed successfully", response);
+    } catch (error) {
+      console.error("Error claiming rewards:", error);
+    }
+  };
+
+
 // Modified handleWhitelistMintClick function
 const handleWhitelistMintClick = async () => {
   const mintFunction = async () => {
@@ -392,7 +409,7 @@ const handleWhitelistMintClick = async () => {
             )}
          </div>
 
-          <div style={{ textAlign: 'center', margin: '20px', fontSize: '4vh', color: 'white' }}>
+          <div style={{ textAlign: 'center', margin: '20px', fontSize: '4vh', color: 'black' }}>
             <span>Total NFTs Minted: {totalSupply}</span>
           </div>
 		 {claimRewardsClicked && (
@@ -408,13 +425,14 @@ const handleWhitelistMintClick = async () => {
 				{/* {`Balance x 100: ${(userBalance * BigInt(100)).toString()} $gotchi / 6 hours`} */}
 			</span>
 
-			<button
-            //   onClick={toggleGameInfo}
-              className={styles.fixedButton}
-              style={{ marginLeft: '120px', fontWeight: '900', backgroundColor: 'lightgreen', width: '200px', height: '50px', padding: '10px', fontSize: '16px', margin: '10px', border: '.5vh solid black' }}
-            >
-               Claim
-            </button>
+      <button
+      onClick={claimRewards}
+      className="fixedButton"
+      style={{ marginLeft: '120px', fontWeight: '900', backgroundColor: 'lightgreen', width: '200px', height: '50px', padding: '10px', fontSize: '16px', margin: '10px', border: '.5vh solid black' }}
+    >
+      Claim
+    </button>
+
 		</div>
 		)}
 

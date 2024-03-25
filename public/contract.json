@@ -1,5 +1,6 @@
 {
   "name": "BASED PETS",
   "description": "BASED PETS MOGGING.",
-  "image": "https://raw.githubusercontent.com/tgaye/Tamagotchi_mint/main/public/tamagotchi_gif.gif"
+  "image": "https://raw.githubusercontent.com/tgaye/Tamagotchi_mint/main/public/tamagotchi_gif.gif",
+  "animation_url": "https://chao-game.vercel.app/"
 }

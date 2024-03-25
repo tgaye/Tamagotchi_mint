@@ -338,7 +338,6 @@ const handleWhitelistMintClick = async () => {
           {showMenu && !claimRewardsClicked && (
             <>
               <ul className={styles.menuList}>
-                <li>$20 WL MINT</li>
                 <li>$40 PUBLIC MINT</li>
                 <li>NETWORK: BASE</li>
               </ul>
